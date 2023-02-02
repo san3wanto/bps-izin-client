@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
 import IzinList from "../components/IzinList";
+import IzinListuser from "../components/IzinListUser";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
@@ -8,7 +9,8 @@ import { getMe } from "../features/authSlice";
 const Izin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
+  // const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMe());
@@ -20,11 +22,24 @@ const Izin = () => {
     }
   }, [isError, navigate]);
 
-  return (
-    <Layout>
-      <IzinList />
-    </Layout>
-  );
+  // useEffect(() => {
+  //   if (isError) {
+  //     navigate("/");
+  //   }
+  //   if (user && user.role !== "admin") {
+  //     navigate("/dashboard");
+  //   }
+  // }, [isError, user, navigate]);
+
+  let list;
+
+  if (user && user.role === "admin ") {
+    list = <IzinList />;
+  } else {
+    list = <IzinListuser />;
+  }
+
+  return <Layout>{list}</Layout>;
 };
 
 export default Izin;

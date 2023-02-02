@@ -38,13 +38,13 @@ const NavB = () => {
                     Pegawai
                   </NavLink>
                 </Nav.Link>
-                <Nav.Link>
-                  <NavLink to={"/izin"} style={{ textDecoration: "none" }}>
-                    Izin
-                  </NavLink>
-                </Nav.Link>
               </Nav>
             )}
+            <Nav.Link>
+              <NavLink to={"/izin"} style={{ textDecoration: "none" }}>
+                Izin
+              </NavLink>
+            </Nav.Link>
             <NavDropdown title={`${user && user.name} (${user && user.role})`} id="collasible-nav-dropdown">
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
             </NavDropdown>
