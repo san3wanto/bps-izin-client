@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Card, Form, FloatingLabel } from "react-bootstrap";
 import "bootstrap";
@@ -8,6 +9,7 @@ const FormAddIzin = () => {
   const [name, setName] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const saveIzin = async (e) => {
     e.preventDefault();
@@ -15,7 +17,11 @@ const FormAddIzin = () => {
       await axios.post("http://localhost:5000/izin", {
         name: name,
       });
-      navigate("/izin");
+      if (user && user.role === "admin") {
+        navigate("/izin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

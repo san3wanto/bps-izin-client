@@ -45,7 +45,7 @@ const Login = () => {
   }
 
   return (
-    <Container className="vh-100 d-flex align-items-center justify-content-center">
+    <Container fluid className="vh-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: "grey" }}>
       <Card style={{ borderRadius: "1.5rem" }} className="d-flex align-items-center justify-content-center p-5">
         <div className="d-flex flex-column align-items-center w-50">
           <Form onSubmit={Auth} className="mt-lg-5 mb-lg-5">

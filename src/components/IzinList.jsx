@@ -32,7 +32,12 @@ const IzinList = () => {
         <h2>Daftar Izin</h2>
       </div>
       <div className="d-flex flex-column align-items-end mx-5 mb-2">
-        <Link to="/izin/add">Tambahkan</Link>
+        <Button size="sm">
+          <Link to="/izin/add" className="d-flex flex-row align-items-center" style={{ textDecoration: "none", color: "white" }}>
+            <box-icon name="plus-circle" rotate="90" color="white"></box-icon>
+            Tambahkan
+          </Link>
+        </Button>
       </div>
       <div className="mx-5">
         <Table responsive striped bordered hover>
