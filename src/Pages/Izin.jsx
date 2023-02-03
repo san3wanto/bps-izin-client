@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
 import IzinList from "../components/IzinList";
-import IzinListuser from "../components/IzinListUser";
+import IzinListuser from "../components/IzinListUser.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
@@ -33,7 +33,7 @@ const Izin = () => {
 
   let list;
 
-  if (user && user.role === "admin ") {
+  if (user && user.role === "admin") {
     list = <IzinList />;
   } else {
     list = <IzinListuser />;
