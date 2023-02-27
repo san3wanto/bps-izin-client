@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Container, Table, Button, InputGroup, Form } from "react-bootstrap";
+// import { useSelector } from "react-redux";
+import { Container, Table, Button } from "react-bootstrap";
 import "bootstrap";
+import "../app.css";
 
 const dayjs = require("dayjs");
 require("dayjs/locale/id");
@@ -11,11 +12,11 @@ dayjs.locale("id");
 
 const IzinList = () => {
   const [izin, setIzin] = useState([]);
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     getIzin();
-  });
+  }, []);
 
   const getIzin = async () => {
     const response = await axios.get("http://localhost:5000/izin");
@@ -24,22 +25,11 @@ const IzinList = () => {
 
   return (
     <Container fluid>
-      <div className="d-flex flex-column align-items-center">
-        <h2>Daftar Izin</h2>
+      <div className="d-flex flex-column align-items-center mt-3">
+        <h2>Riwayat Izin</h2>
       </div>
-      <div className="d-flex flex-row justify-content-between mx-5 mb-2">
-        <div className="d-flex flex-row justify-content-around">
-          <InputGroup className="mb-1" size="sm">
-            <InputGroup.Text id="basic-addon1">
-              <strong>{user && user.name}</strong>
-            </InputGroup.Text>
-            <Form.Control placeholder={user && user.jab} disabled />
-          </InputGroup>
-          <InputGroup className="mb-1 ml-3" size="sm">
-            <InputGroup.Text id="basic-addon1">NIP</InputGroup.Text>
-            <Form.Control placeholder={user && user.nip} disabled />
-          </InputGroup>
-        </div>
+      <hr></hr>
+      <div className="d-flex flex-column align-items-center mx-5 my-2">
         <Button size="sm">
           <Link to="/izin/add" className="d-flex flex-row align-items-center" style={{ textDecoration: "none", color: "white" }}>
             <box-icon name="plus-circle" rotate="90" color="white"></box-icon>
@@ -47,23 +37,28 @@ const IzinList = () => {
           </Link>
         </Button>
       </div>
-      <div className="mx-5">
-        <Table responsive striped bordered hover>
+      <hr></hr>
+      <div className="mx-2">
+        <Table responsive striped="column" bordered>
           <thead>
             <tr>
               <th>No</th>
-              <th>Keterangan</th>
-              <th>Tanggal Dibuat</th>
-              <th>Waktu Dibuat</th>
+              <th>Keterangan Izin</th>
+              <th>Dibuat</th>
+              <th>Diubah</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {izin.map((izin, index) => (
               <tr key={izin.uuid}>
-                <td>{index + 1}</td>
-                <td>{izin.name}</td>
-                <td>{`${dayjs(izin.createdAt).format("dddd, DD MMM YYYY")}`}</td>
-                <td>{`${dayjs(izin.createdAt).format("HH:mm")} WITA`}</td>
+                <td datalabel="No">{index + 1}</td>
+                <td datalabel="Ket" className="text-break">
+                  {izin.ket}
+                </td>
+                <td datalabel="Tanggal Dibuat">{`${dayjs(izin.createdAt).format("dddd, DD MMM YYYY - HH:mm")} WITA`}</td>
+                <td datalabel="Waktu Dibuat">{`${dayjs(izin.updatedAt).format("dddd, DD MMM YYYY - HH:mm")} WITA`}</td>
+                <td datalabel="Status">{izin.status}</td>
               </tr>
             ))}
           </tbody>

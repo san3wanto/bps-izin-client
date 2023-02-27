@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Table, Button } from "react-bootstrap";
 import "bootstrap";
+import "../app.css";
 
 const dayjs = require("dayjs");
 require("dayjs/locale/id");
@@ -13,7 +14,7 @@ const IzinList = () => {
 
   useEffect(() => {
     getIzin();
-  });
+  }, []);
 
   const getIzin = async () => {
     const response = await axios.get("http://localhost:5000/izin");
@@ -28,10 +29,11 @@ const IzinList = () => {
 
   return (
     <Container fluid>
-      <div className="d-flex flex-column align-items-center">
+      <div className="d-flex flex-column align-items-center mt-3">
         <h2>Daftar Izin</h2>
       </div>
-      <div className="d-flex flex-column align-items-end mx-5 mb-2">
+      <hr></hr>
+      <div className="d-flex flex-column align-items-center mx-5 my-2">
         <Button size="sm">
           <Link to="/izin/add" className="d-flex flex-row align-items-center" style={{ textDecoration: "none", color: "white" }}>
             <box-icon name="plus-circle" rotate="90" color="white"></box-icon>
@@ -39,8 +41,9 @@ const IzinList = () => {
           </Link>
         </Button>
       </div>
-      <div className="mx-5">
-        <Table responsive striped bordered hover>
+      <hr></hr>
+      <div className="mx-2">
+        <Table responsive striped="columns" bordered>
           <thead>
             <tr>
               <th>No</th>
@@ -48,27 +51,35 @@ const IzinList = () => {
               <th>NIP</th>
               <th>Jabatan</th>
               <th>Keterangan</th>
-              <th>Tanggal Dibuat</th>
-              <th>Waktu Dibuat</th>
+              <th>Dibuat</th>
+              <th>Diubah</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {izin.map((izin, index) => (
               <tr key={izin.uuid}>
-                <td>{index + 1}</td>
-                <td>{izin.user.name}</td>
-                <td>{izin.user.nip}</td>
-                <td>{izin.user.jab}</td>
-                <td>{izin.name}</td>
-                <td>{`${dayjs(izin.createdAt).format("dddd, DD MMM YYYY")}`}</td>
-                <td>{`${dayjs(izin.createdAt).format("HH:mm")} WITA`}</td>
-                <td>
-                  <Button variant="link" size="sm">
-                    <Link to={`/izin/edit/${izin.uuid}`}>Ubah</Link>
+                <td datalabel="No">{index + 1}</td>
+                <td datalabel="Nama">{izin.user.name}</td>
+                <td datalabel="NIP" className="text-break">
+                  {izin.user.nip}
+                </td>
+                <td datalabel="Jabatan">{izin.user.jab}</td>
+                <td datalabel="Keterangan" className="text-break">
+                  {izin.ket}
+                </td>
+                <td datalabel="Tanggal Dibuat">{`${dayjs(izin.createdAt).format("dddd, DD MMM YYYY - HH:mm")} WITA`}</td>
+                <td datalabel="Waktu Dibuat">{`${dayjs(izin.updatedAt).format("dddd, DD MMM YYYY - HH:mm")} WITA`}</td>
+                <td datalabel="Status">{izin.status}</td>
+                <td datalabel="Aksi" className="act d-flex justify-content-around flex-wrap">
+                  <Button variant="primary" size="sm" className="m-1">
+                    <Link to={`/izin/edit/${izin.uuid}`} style={{ textDecoration: "none", color: "white" }}>
+                      Ubah
+                    </Link>
                   </Button>
                   {"   "}
-                  <Button variant="danger" size="sm" onClick={() => deleteIzin(izin.uuid)}>
+                  <Button variant="danger" size="sm" onClick={() => deleteIzin(izin.uuid)} className="m-1">
                     Hapus
                   </Button>
                 </td>

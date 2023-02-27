@@ -6,7 +6,7 @@ import { Button, Container, Form, InputGroup, Card } from "react-bootstrap";
 import logo from "../bps.png";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Login = () => {
     if (isError) {
       pesan = message;
     } else {
-      pesan = "Masukkan email dan password";
+      pesan = "Masukkan username dan password";
     }
     return pesan;
   };
@@ -35,13 +35,13 @@ const Login = () => {
 
   const Auth = (e) => {
     e.preventDefault();
-    dispatch(LoginUser({ email, password }));
+    dispatch(LoginUser({ username, password }));
   };
 
   if (isError) {
     pesan = message;
   } else {
-    pesan = "Masukkan Email dan Password";
+    pesan = "Masukkan Username dan Password";
   }
 
   return (
@@ -51,15 +51,15 @@ const Login = () => {
           <Form onSubmit={Auth} className="mt-lg-5 mb-lg-5">
             <img className="fluid" src={logo} alt="bps logo" width="250px" />
             {isError}
-            <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
-              <Form.Label className="fw-bold">Email</Form.Label>
-              <Form.Control type="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email" />
+            <Form.Group className="mb-3 mt-3" controlId="formBasicUsername">
+              <Form.Label className="fw-bold">Username</Form.Label>
+              <Form.Control type="text" className="input" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Masukkan Username" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label className="fw-bold">Password</Form.Label>
               <InputGroup>
-                <Form.Control type={passwordShown ? "text" : "password"} className="input mr-2" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                <Form.Control type={passwordShown ? "text" : "password"} className="input mr-2" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan Password" />
                 <InputGroup.Text>
                   <box-icon type="solid" name={passwordShown ? "show" : "hide"} size="md color" onClick={togglePassword}></box-icon>
                 </InputGroup.Text>

@@ -24,7 +24,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Welcome />
-      <IzinListDashboard/>
+      <IzinListDashboard />
     </Layout>
   );
 };
