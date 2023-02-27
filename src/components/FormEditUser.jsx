@@ -92,7 +92,7 @@ const FormEditUser = () => {
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control size="md" type="text" placeholder="Masukkan Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </Form.Group> 
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicJab">
             <Form.Label>Unit Kerja</Form.Label>
             <Form.Select value={jab} onChange={(e) => setJab(e.target.value)}>
@@ -140,7 +140,7 @@ const FormEditUser = () => {
                 Simpan
               </Button>
               <p className="has-text-centered">Password Cocok</p>
-              {console.log(`Passwordnya adalah ${password} dan confPasswordnya adalah ${confPassword}`)}
+              {/* {console.log(`Passwordnya adalah ${password} dan confPasswordnya adalah ${confPassword}`)} */}
             </div>
           ) : (
             <div className="d-flex flex-column align-items-center justify-content-center">
@@ -148,7 +148,7 @@ const FormEditUser = () => {
                 Simpan
               </Button>
               <p className="has-text-centered">Password tidak cocok</p>
-              {console.log(`Passwordnya adalah ${password} dan confPasswordnya adalah ${confPassword}`)}
+              {/* {console.log(`Passwordnya adalah ${password} dan confPasswordnya adalah ${confPassword}`)} */}
             </div>
           )}
         </Form>
