@@ -5,18 +5,10 @@ import { Link } from "react-router-dom";
 import { Container, Table, Button, Badge } from "react-bootstrap";
 import "bootstrap";
 
-const dayjs = require("dayjs");
-require("dayjs/locale/id");
-dayjs.locale("id");
-
 const IzinList = () => {
   const { user } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
   const [izin, setIzin] = useState([]);
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   const getIzin = async () => {
     const response = await axios.get("http://localhost:5000/izin");
@@ -44,14 +36,10 @@ const IzinList = () => {
     await axios.patch(`http://localhost:5000/izin/${izinId}/finish`);
     getUsers();
     getIzin();
-    refreshPage();
   };
 
   useEffect(() => {
     getUsers();
-  }, []);
-
-  useEffect(() => {
     getIzin();
   }, []);
 
@@ -60,23 +48,27 @@ const IzinList = () => {
   console.log(izin[izin.length - 1]?.uuid);
   console.log(izin[izin.length - 1]?.status);
 
+  let Tutton = () => {
+    return (
+      <div className="d-flex justify-content-center">
+        {user && user.status === "Izin" && izin && izin[izin.length - 1].status === "Belum" ? (
+          <Button onClick={() => doubleUp(user?.uuid, izin[izin?.length - 1]?.uuid)} className="btn btn-primary" style={{ fontWeight: "700" }}>
+            Selesai
+          </Button>
+        ) : (
+          <Link to="/izin/add" className="btn btn-primary" style={{ fontWeight: "700" }}>
+            Izin Sekarang
+          </Link>
+        )}
+      </div>
+    );
+  };
+
   return (
     <Container>
       <div>
         <hr></hr>
-        {user && user.role === "user" && (
-          <div className="d-flex justify-content-center">
-            {user && user.status === "Izin" ? (
-              <Button onClick={() => doubleUp(user?.uuid, izin[izin?.length - 1]?.uuid)} className="btn btn-primary" style={{ fontWeight: "700" }}>
-                Selesaikan Izin
-              </Button>
-            ) : (
-              <Link to="/izin/add" className="btn btn-primary" style={{ fontWeight: "700" }}>
-                Izin Sekarang
-              </Link>
-            )}
-          </div>
-        )}
+        {user && user.role === "user" && <Tutton />}
         <hr></hr>
       </div>
       <div className="d-flex flex-row justify-content-around flex-wrap">
